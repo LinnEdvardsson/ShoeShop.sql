@@ -16,7 +16,7 @@ locationId int,
 Foreign key (locationid) references Location(id) on delete set null 
 );  
 
--- skrev in egna datum på order för att kunna tracka ordrar för olika månader. 
+
 Create table CustomerOrder(  
 id int auto_increment primary key,  
 dateOfOrder timestamp default current_timestamp,  
@@ -58,8 +58,7 @@ foreign key(productId) references Product(id) on delete cascade,
 foreign key(categoryId) references Category(id) on delete cascade 
 );  
 
--- on delete cascade; när en order tas bort, ska inte dess innehåll finnas kvar, det är en svag entitet/relation
--- on delete set null; om en produkt tas bort ska denna info finnas kvar
+
 Create table OrderedProduct(  
 orderId int,  
 productId int,  
@@ -68,9 +67,9 @@ foreign key (orderId) references CustomerOrder(id) on delete cascade,
 foreign key (productId) references Product(id) on delete set null  
 ); 
 
--- indexerar personnummer; för att det är en vanligt förekommande sökning för att få fram en specifik kund utifrån given information och exempelvis se dess ordrar
+
 create index IX_sscr on Customer(sscr);
--- indexerar produktnamn (modell); man kan behöva söka på produktmodell för att få fram tex storlekar/färger varan finns i, eller lagersaldo
+
 create index IX_productname on Product(productName);
 
 insert into Location(City) values 
